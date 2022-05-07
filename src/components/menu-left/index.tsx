@@ -1,39 +1,41 @@
 import { Menu } from 'antd';
 import { MailOutlined,SettingOutlined,FormOutlined,CloudUploadOutlined,AppstoreOutlined } from '@ant-design/icons';
 import { FC,useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+
 const items = [
   {
     label: '图床配置',
-    key: '1',
+    key: 'deploy',
     icon: <FormOutlined />,
   },
   {
     label: '上传图片',
-    key: '2',
+    key: 'upload',
     icon: <CloudUploadOutlined />,
   },
   {
     label: '图床管理',
-    key: '3',
+    key: 'manage',
     icon: <AppstoreOutlined />,
   },
   {
     label: '我的设置',
-    key: '4',
+    key: 'setting',
     icon: <SettingOutlined />,
   },
   {
     label: '帮助反馈',
-    key: '5',
+    key: 'feedback',
     icon: <MailOutlined />,
   },
 ];
 
 const MenuLeft:FC = () => {
-  const [current, setCurrent] = useState('1');
-
+  const [current, setCurrent] = useState('manage');
+  const navigate = useNavigate()
   const onClick = (e:any) => {
-    console.log('click ', e);
+    navigate('/'+e.key);
     setCurrent(e.key);
   };
 

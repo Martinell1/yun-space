@@ -1,8 +1,13 @@
-import { Layout } from 'antd';
-
+import { Layout,Breadcrumb } from 'antd';
 import './App.css';
 import MenuTop from './components/navigation-bar';
 import MenuLeft from './components/menu-left';
+import { Route, Routes } from 'react-router-dom';
+import UploadPage from './pages/upload-page';
+import DeployPage from './pages/deploy-page';
+import ManagePage from './pages/manage-page';
+import SettingPage from './pages/setting-page';
+import FeedbackPage from './pages/feedback-page';
 
 const { Header, Content, Sider } = Layout;
 
@@ -12,12 +17,26 @@ function App() {
       <Header className="header">
         <MenuTop></MenuTop>
       </Header>
-      <Content style={{ padding: '0 50px'}}>
-        <Layout className="site-layout-background" style={{ padding: '24px 0' }}>
-          <Sider className="site-layout-background" width={200}>
+      <Content style={{ padding: '0 50px 50px 50px'}}>
+        <Breadcrumb style={{ margin: '16px' }}>
+          <Breadcrumb.Item>Home</Breadcrumb.Item>
+          <Breadcrumb.Item>List</Breadcrumb.Item>
+          <Breadcrumb.Item>App</Breadcrumb.Item>
+        </Breadcrumb>
+        <Layout className="site-layout-background">
+          <Sider className="site-layout-background sider" width={200}>
             <MenuLeft></MenuLeft>
           </Sider>
-          <Content style={{ padding: '0 24px', minHeight:'calc(100vh - 64px - 100px)' }}>Content</Content>
+          <Content style={{ padding: '0 24px', minHeight:'calc(100vh - 64px - 4px - 100px)' }}>
+            <Routes>
+              <Route index element={<ManagePage />} />
+              <Route path='/deploy' element={<DeployPage/>}></Route>
+              <Route path='/upload' element={<UploadPage/>}></Route>
+              <Route path='/manage' element={<ManagePage/>}></Route>
+              <Route path='/setting' element={<SettingPage/>}></Route>
+              <Route path='/feedback' element={<FeedbackPage/>}></Route>
+            </Routes>
+          </Content>
         </Layout>
       </Content>
     </Layout>
