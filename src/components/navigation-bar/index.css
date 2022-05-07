@@ -1,0 +1,12 @@
+.navigation-bar,.navigation-bar-left{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.title{
+    color: white;
+    margin-left: 10px;
+    font-size: 24px;
+    font-weight: 700;
+}
