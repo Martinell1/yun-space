@@ -6,7 +6,7 @@ export default function BreadcrumbTop(){
     return (
         <Breadcrumb style={{ margin: '16px' }}>
             <Breadcrumb.Item>Yun-Space</Breadcrumb.Item>
-            <Breadcrumb.Item>{location.pathname}</Breadcrumb.Item>
+            <Breadcrumb.Item>{location.pathname.slice(1)}</Breadcrumb.Item>
             {
                 ['/manage','/upload'].includes(location.pathname) ? <Breadcrumb.Item>App</Breadcrumb.Item> : ''
             }

@@ -1,25 +1,21 @@
-import { Form, Input } from 'antd';
-import { useEffect, useState } from 'react';
+import { Form, Input, Button } from 'antd';
+
+import { useAppContext } from '../../store';
 export default function DeployPage(){
-    const [form,setForm] = useState({
-        accessKey:'',
-        secretKey:'',
-        bucket:'',
-    })
+    const {config,setConfig} = useAppContext()
+    console.log(config);
     
-    useEffect(()=>{
-        setForm({
-            accessKey:'GHtgzdXyBwen6ktRdnM3TruspfORzrqpJcQdOnOj',
-            secretKey:'ljJdPY5eSiV6nWwNkEgsNnhBqNZ3J3DqDOk8drGS',
-            bucket:'light-hub',
-        })
-    },[])
+    const onFinish = (newConfig:any) => {
+        console.log(newConfig);
+        setConfig(newConfig)
+    }
     return (
         <Form
             style={{padding:'20px'}}
             colon={false}
             labelCol={{ span: 1 }}
-            initialValues={form}
+            initialValues={config}
+            onFinish={onFinish}
             >
             <Form.Item label="accessKey" name='accessKey'>
                 <Input  placeholder="请输入accessKey"/>
@@ -29,6 +25,11 @@ export default function DeployPage(){
             </Form.Item>
             <Form.Item label="bucket" name='bucket'>
                 <Input placeholder="请输入bucket"/>
+            </Form.Item>
+            <Form.Item  wrapperCol={{ offset:1 }}>
+                <Button type="primary" htmlType="submit">
+                    完成配置
+                </Button>
             </Form.Item>
         </Form>
     )
