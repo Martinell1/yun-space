@@ -1,9 +1,19 @@
 import React, { ReactNode } from "react";
 import {useLocalStorageState} from 'ahooks'
 
+export interface configProps {
+    accessKey:string,
+    secretKey:string,
+    bucket:string
+}
+
 export const appContext = React.createContext({
-    config:{},
-    setConfig:(newConfig:any)=>{}
+    config:{
+        accessKey:'',
+        secretKey:'',
+        bucket:''
+    },
+    setConfig:(newConfig:configProps)=>{}
 })
 
 export const AppProviders = ({children}:{children:ReactNode}) => {

@@ -1,12 +1,9 @@
 import { Form, Input, Button } from 'antd';
 
-import { useAppContext } from '../../store';
+import { configProps ,useAppContext } from '../../store';
 export default function DeployPage(){
     const {config,setConfig} = useAppContext()
-    console.log(config);
-    
-    const onFinish = (newConfig:any) => {
-        console.log(newConfig);
+    const onFinish = (newConfig:configProps) => {
         setConfig(newConfig)
     }
     return (
