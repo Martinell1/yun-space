@@ -2,8 +2,6 @@ import { Upload, message } from 'antd';
 import { InboxOutlined } from '@ant-design/icons';
 import { useAppContext } from '../../store';
 import axios from 'axios';
-import { useEffect,useState } from 'react';
-
 
 const { Dragger } = Upload;
 
@@ -17,7 +15,6 @@ const uploadConfig = {
 
 export default function UploadPage(){
     const {config} = useAppContext()
-
 
     return (
         <div style={{padding:'20px'}}>
