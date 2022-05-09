@@ -1,52 +1,43 @@
 import { Upload, message } from 'antd';
 import { InboxOutlined } from '@ant-design/icons';
-import { configProps, useAppContext } from '../../store';
-import { useRequest } from 'ahooks';
+import { useAppContext } from '../../store';
 import axios from 'axios';
+import { useEffect,useState } from 'react';
 
-const getUploadToken = (config:configProps)=>{
-  return axios.post('http://localhost:3001/getUploadToken',config)
-  .then(res=>{
-    const {data} = res
-    return data
-  })
-}
 
 const { Dragger } = Upload;
 
-const props = {
-  name: 'file',
+const uploadConfig = {
   multiple: true,
-  action: 'http://upload-cn-east-2.qiniup.com',
-  async onChange(info:any) {
-    const { status } = info.file;
-    console.log(status);
-    if(status === 'uploading'){
-      const config = JSON.parse(localStorage.getItem('YunSpace_Config')!)
-      const token = await getUploadToken(config)
-    }
-    if (status !== 'uploading') {
-      console.log(info.file, info.fileList);
-    }
-    if (status === 'done') {
-      message.success(`${info.file.name} file uploaded successfully.`);
-    } else if (status === 'error') {
-      message.error(`${info.file.name} file upload failed.`);
-    }
-  },
+  accept:"image/*",
   onDrop(e:any) {
     console.log('Dropped files', e.dataTransfer.files);
-  },
+  }
 };
-
 
 export default function UploadPage(){
     const {config} = useAppContext()
 
+
     return (
         <div style={{padding:'20px'}}>
-            <Dragger {...props}
-                accept="image/*">
+            <Dragger 
+                {...uploadConfig}
+                customRequest={
+                  async (info)=>{
+                    const {data} = await axios.post('http://localhost:3001/getUploadToken',config)
+                    const form = new FormData()
+                    form.append('file',info.file)
+                    form.append('token',data)
+                    axios.post('http://upload-cn-east-2.qiniup.com',form)
+                    .then(res=>{
+                      const {key} = res.data
+                      message.success(`上传成功`)
+                      console.log('http://qiniu.kaijinx.top/'+key);
+                      
+                    })
+                  }
+                }>
                 <p className="ant-upload-drag-icon">
                 <InboxOutlined />
                 </p>
