@@ -14,7 +14,7 @@ const uploadConfig = {
 };
 
 export default function UploadPage(){
-    const {config} = useAppContext()
+    const {config,management,setManagement} = useAppContext()
 
     return (
         <div style={{padding:'20px'}}>
@@ -30,7 +30,13 @@ export default function UploadPage(){
                     .then(res=>{
                       const {key} = res.data
                       message.success(`上传成功`)
-                      console.log('http://qiniu.kaijinx.top/'+key);
+                      console.log(`http://${config.domain}/${key}`);
+
+                      management.push({
+                        name:key,
+                        url:`http://${config.domain}/${key}`
+                      })
+                      setManagement(management)
                       
                     })
                   }

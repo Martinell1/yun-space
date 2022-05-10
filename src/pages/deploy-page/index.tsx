@@ -23,6 +23,9 @@ export default function DeployPage(){
             <Form.Item label="bucket" name='bucket'>
                 <Input placeholder="请输入bucket"/>
             </Form.Item>
+            <Form.Item label="domain" name='domain'>
+                <Input placeholder="请输入域名"/>
+            </Form.Item>
             <Form.Item  wrapperCol={{ offset:1 }}>
                 <Button type="primary" htmlType="submit">
                     完成配置
