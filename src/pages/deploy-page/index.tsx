@@ -1,5 +1,6 @@
-import { Form, Input, Button, Radio ,Dropdown, Menu, message } from 'antd';
+import { Form, Input, Button, Radio , message } from 'antd';
 import { useState } from 'react';
+import SelectDir from '../../components/select-dir';
 
 import { configProps ,imageProps,useAppContext } from '../../store';
 
@@ -12,6 +13,8 @@ export default function DeployPage(){
     const onFinish = (newConfig:deployProps) => {
         if(newConfig.catalogType === 1){
             newConfig.dir = 'default'
+        }else if(newConfig.catalogType === 2){
+            newConfig.dir = currentDir
         }else if(newConfig.catalogType === 3){
             management.push({
                 'dir':newConfig.dir,
@@ -19,6 +22,7 @@ export default function DeployPage(){
             })
             setManagement(management)
         }
+        console.log(newConfig);
         
         setConfig(newConfig)
         message.success(`配置成功`)
@@ -56,30 +60,13 @@ export default function DeployPage(){
                     >
                     <Radio value={1}>默认</Radio>
                     <Radio value={2}>选择目录</Radio>
-                    <Radio value={3}>新建</Radio>
+                    <Radio value={3}>新建目录</Radio>
                 </Radio.Group>
             </Form.Item>
             {
                 catalogType === 2 
                     ?   <Form.Item label="选择目录" name='dir'>
-                            <Dropdown 
-                                overlay={
-                                    <Menu 
-                                        items={management.map(element=>{
-                                            return {
-                                                label:element.dir,
-                                                key:element.dir
-                                            }
-                                        })} 
-                                        onClick={(e)=>{
-                                            setCurrentDir(e.key)                
-                                        }} 
-                                    />
-                                } 
-                                placement="bottomRight" 
-                                arrow>
-                                <Input value={currentDir} />
-                            </Dropdown>
+                            <SelectDir currentDir={currentDir} setCurrentDir={setCurrentDir}></SelectDir>
                         </Form.Item> 
                     :   catalogType === 3 
                         ?   <Form.Item label="新建目录" name='dir'>
