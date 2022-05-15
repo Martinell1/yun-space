@@ -10,7 +10,7 @@ export default function BreadcrumbTop(){
             <Breadcrumb.Item>Yun-Space</Breadcrumb.Item>
             <Breadcrumb.Item>{location.pathname.slice(1)}</Breadcrumb.Item>
             {
-                ['/manage','/upload'].includes(location.pathname) 
+                ['/upload'].includes(location.pathname) 
                     ? <Breadcrumb.Item>{config.dir}</Breadcrumb.Item> 
                     : ''
             }
