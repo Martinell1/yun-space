@@ -1,20 +1,20 @@
-import { Upload, message } from 'antd';
+import { Upload, Image, message } from 'antd';
 import { InboxOutlined } from '@ant-design/icons';
 import { useAppContext } from '../../store';
 import axios from 'axios';
+import { useState } from 'react';
 
 const { Dragger } = Upload;
 
 const uploadConfig = {
   multiple: true,
   accept:"image/*",
-  onDrop(e:any) {
-    console.log('Dropped files', e.dataTransfer.files);
-  }
+  showUploadList:false,
 };
 
 export default function UploadPage(){
     const {config,management,setManagement} = useAppContext()
+    const [current_url,setCurrentUrl] = useState('')
 
     return (
         <div style={{padding:'20px'}}>
@@ -30,14 +30,14 @@ export default function UploadPage(){
                     .then(res=>{
                       const {key} = res.data
                       message.success(`上传成功`)
-                      console.log(`http://${config.domain}/${key}`);
-
+                      const url = `http://${config.domain}/${key}`;
                       management.push({
                         name:key,
-                        url:`http://${config.domain}/${key}`
+                        url
                       })
                       setManagement(management)
-                      
+                      setCurrentUrl(url)
+            
                     })
                   }
                 }>
@@ -50,6 +50,15 @@ export default function UploadPage(){
                 band files
                 </p>
             </Dragger>
+            {
+              current_url !== '' ? 
+              <Image
+                style={{marginTop:'20px',objectFit:'cover'}}
+                preview={false}
+                src={current_url}
+                height={'60vh'}
+              /> : ''
+            }
         </div>
     )
 }
