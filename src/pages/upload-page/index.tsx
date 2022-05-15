@@ -17,7 +17,7 @@ export default function UploadPage(){
     const [current_url,setCurrentUrl] = useState('')
 
     return (
-        <div style={{padding:'20px'}}>
+        <div style={{padding:'20px 0'}}>
             <Dragger 
                 {...uploadConfig}
                 customRequest={
@@ -31,13 +31,19 @@ export default function UploadPage(){
                       const {key} = res.data
                       message.success(`上传成功`)
                       const url = `http://${config.domain}/${key}`;
-                      management.push({
-                        name:key,
-                        url
+                    
+                      console.log(management);
+                      management.map(element=>{
+                        if(element.dir === config.dir){
+                          element.imageList.push({
+                            dir:config.dir,
+                            name:key,
+                            url
+                          })
+                        }
                       })
-                      setManagement(management)
                       setCurrentUrl(url)
-            
+                      setManagement(management)
                     })
                   }
                 }>

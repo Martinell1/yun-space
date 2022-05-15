@@ -1,16 +1,24 @@
 import React, { ReactNode } from "react";
 import {useLocalStorageState} from 'ahooks'
+import { ImageProps } from "antd";
 
 export interface configProps {
     accessKey:string,
     secretKey:string,
     bucket:string,
     domain:string,
+    dir:string
+}
+
+export interface imageProps {
+    dir:string,
+    name:string,
+    url:string,
 }
 
 export interface managementProps {
-    name:string,
-    url:string
+    dir:string,
+    imageList:Array<imageProps>
 }
 
 export const appContext = React.createContext({
@@ -19,9 +27,13 @@ export const appContext = React.createContext({
         secretKey:'',
         bucket:'',
         domain:'',
+        dir:'',
     },
     setConfig:(newConfig:configProps)=>{},
-    management:[{name:'',url:''}],
+    management:[{
+        dir:'default',
+        imageList:[] as Array<imageProps>
+    }],
     setManagement:(newManagement:managementProps[])=>{},
 })
 
@@ -32,13 +44,15 @@ export const AppProviders = ({children}:{children:ReactNode}) => {
             secretKey:'',
             bucket:'',
             domain:'',
+            dir:'/default',
         }
     })
 
     const [management ,setManagement] = useLocalStorageState('YunSpace_Management',{
-        defaultValue:[
-            {name:'',url:''}
-        ]
+        defaultValue:[{
+            dir:'default',
+            imageList:[] as Array<imageProps>
+        }]
     })
 
     return (
