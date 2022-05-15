@@ -1,6 +1,5 @@
 import React, { ReactNode } from "react";
 import {useLocalStorageState} from 'ahooks'
-import { ImageProps } from "antd";
 
 export interface configProps {
     accessKey:string,

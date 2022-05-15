@@ -14,7 +14,7 @@ const uploadConfig = {
 
 export default function UploadPage(){
     const {config,management,setManagement} = useAppContext()
-    const [current_url,setCurrentUrl] = useState('')
+    const [currentUrl,setCurrentUrl] = useState('')
 
     return (
         <div style={{padding:'20px 0'}}>
@@ -29,10 +29,7 @@ export default function UploadPage(){
                     axios.post('http://upload-cn-east-2.qiniup.com',form)
                     .then(res=>{
                       const {key} = res.data
-                      message.success(`上传成功`)
                       const url = `http://${config.domain}/${key}`;
-                    
-                      console.log(management);
                       management.map(element=>{
                         if(element.dir === config.dir){
                           element.imageList.push({
@@ -41,9 +38,11 @@ export default function UploadPage(){
                             url
                           })
                         }
+                        return element
                       })
                       setCurrentUrl(url)
                       setManagement(management)
+                      message.success(`上传成功`)
                     })
                   }
                 }>
@@ -57,11 +56,11 @@ export default function UploadPage(){
                 </p>
             </Dragger>
             {
-              current_url !== '' ? 
+              currentUrl !== '' ? 
               <Image
                 style={{marginTop:'20px',objectFit:'cover'}}
                 preview={false}
-                src={current_url}
+                src={currentUrl}
                 height={'60vh'}
               /> : ''
             }

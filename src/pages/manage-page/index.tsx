@@ -11,12 +11,13 @@ export default function ManagePage(){
         {
             management.map((dir,index) => {
                 return (
-                    <div>
+                    <div key={index}>
                         {
                             dir.dir === currentDir ?
                             dir.imageList.map((image)=>{
                                 return (
                                     <Image
+                                        key={image.name}
                                         style={{objectFit:'cover'}}
                                         src={image.url}
                                         width={200}
