@@ -13,24 +13,30 @@ export default function ManagePage(){
         {
             management.map((dir,index) => {
                 return (
-                    <div key={index}>
+                    <div key={index}
+                        style={{
+                            display:'flex',
+                            flexWrap:'wrap'
+                        }}>
                         {
                             dir.dir === currentDir ?
                             dir.imageList.map((image)=>{
                                 return (
-                                    <Image
-                                        key={image.name}
-                                        style={{objectFit:'cover'}}
-                                        src={image.url}
-                                        width={200}
-                                        height={140}
-                                        onClick={() => {
-                                            console.log('触发');
-                                        }}
-                                    /> 
+                                    <div style={{margin:'0 20px 20px 0'}}>
+                                        <Image
+                                            key={image.name}
+                                            style={{objectFit:'cover'}}
+                                            src={image.url}
+                                            width={200}
+                                            height={140}
+                                            onClick={() => {
+                                                console.log('触发');
+                                            }}
+                                        /> 
+                                    </div>
                                 )
                             })
-                            : ''
+                            : null
                         }
                     </div>
                 )
