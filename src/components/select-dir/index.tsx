@@ -1,12 +1,14 @@
 import { Dropdown, Menu ,Input } from "antd"
+import { Children, ReactNode } from "react"
 import { useAppContext } from "../../store"
 
 interface SelectProps {
     currentDir:string,
-    setCurrentDir:Function
+    setCurrentDir:Function,
+    children?:ReactNode
 }
 
-export default function SelectDir({currentDir,setCurrentDir}:SelectProps){
+export default function SelectDir({currentDir,setCurrentDir,children}:SelectProps){
     const {management} = useAppContext()
 
     return (
@@ -26,7 +28,9 @@ export default function SelectDir({currentDir,setCurrentDir}:SelectProps){
             } 
             placement="bottomRight" 
             arrow>
-            <Input value={currentDir} />
+            {
+                children == null ? <Input value={currentDir}/> : children
+            }
         </Dropdown>
     )
 }

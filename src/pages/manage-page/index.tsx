@@ -1,6 +1,6 @@
 import { useAppContext } from '../../store'
 import React, { useState } from 'react';
-import { Image } from 'antd';
+import { Button, Image } from 'antd';
 import SelectDir from '../../components/select-dir';
 import './index.css'
 
@@ -9,7 +9,7 @@ export default function ManagePage(){
     const [currentDir,setCurrentDir] = useState(config.dir)
     return (
         <div style={{padding:'20px 0'}}>
-        <SelectDir currentDir={currentDir} setCurrentDir={setCurrentDir}></SelectDir>
+        <SelectDir currentDir={currentDir} setCurrentDir={setCurrentDir} children={<Button style={{marginBottom:'20px'}}>{currentDir}</Button>}></SelectDir>
         {
             management.map((dir,index) => {
                 return (

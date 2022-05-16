@@ -22,7 +22,6 @@ export default function DeployPage(){
             })
             setManagement(management)
         }
-        console.log(newConfig);
         
         setConfig(newConfig)
         message.success(`配置成功`)
