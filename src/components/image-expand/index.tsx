@@ -22,6 +22,7 @@ const ImageExpand = (props:imageProps)=>{
                         }
                     })
                     setManagement(management);
+                    message.success('修改成昆')
                 }}>
             </Input>
             <div

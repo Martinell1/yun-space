@@ -1,6 +1,6 @@
 import { useAppContext } from '../../store'
 import React, { useState } from 'react';
-import { Button, Card, Image, message } from 'antd';
+import { Button, Card, Image } from 'antd';
 import SelectDir from '../../components/select-dir';
 import './index.css'
 import ImageExpand from '../../components/image-expand';

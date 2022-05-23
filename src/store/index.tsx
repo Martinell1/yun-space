@@ -6,7 +6,9 @@ export interface configProps {
     secretKey:string,
     bucket:string,
     domain:string,
-    dir:string
+    dir:string,
+    compress:boolean,
+    theme:string,
 }
 
 export interface imageProps {
@@ -28,6 +30,8 @@ export const appContext = React.createContext({
         bucket:'',
         domain:'',
         dir:'',
+        compress:false,
+        theme:''
     },
     setConfig:(newConfig:configProps)=>{},
     management:[{
@@ -45,6 +49,8 @@ export const AppProviders = ({children}:{children:ReactNode}) => {
             bucket:'',
             domain:'',
             dir:'/default',
+            compress:true,
+            theme:'light'
         }
     })
 
