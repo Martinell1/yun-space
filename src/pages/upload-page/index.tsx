@@ -21,7 +21,6 @@ export default function UploadPage(){
                 {...uploadConfig}
                 customRequest={
                   async (info)=>{    
-
                     const {data} = await axios.post('http://localhost:3001/getUploadToken',config)
                     const form = new FormData()
                     form.append('file',info.file)
@@ -30,20 +29,37 @@ export default function UploadPage(){
                     .then(res=>{
                       const {key} = res.data
                       const url = `http://${config.domain}/${key}`;
-                      management.map(element=>{
-                        if(element.dir === config.dir){
-                          element.imageList.push({
-                            dir:config.dir,
-                            id:key,
-                            name:key,
-                            url
-                          })
+                      let hasUpload = false
+                      for(let i = 0 ; i < management.length ;i++){
+                        const dir = management[i]
+                        if(dir.dir === config.dir){
+                          for(let j = 0 ; j < dir.imageList.length ; j++){
+                            const img = dir.imageList[j];
+                            if(img.id === key){
+                              message.error('该图片已上传');
+                              hasUpload = true
+                              return
+                            }
+                          }
                         }
-                        return element
-                      })
-                      setCurrentUrl(url)
-                      setManagement(management)
-                      message.success(`上传成功`)
+                      }
+
+                      if(!hasUpload){
+                        management.map(element=>{
+                          if(element.dir === config.dir){
+                            element.imageList.push({
+                              dir:config.dir,
+                              id:key,
+                              name:key,
+                              url
+                            })
+                          }
+                          return element
+                        })
+                        setCurrentUrl(url)
+                        setManagement(management)
+                        message.success(`上传成功`)
+                      }
                     })
                   }
                 }>

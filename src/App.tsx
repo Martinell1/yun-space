@@ -1,6 +1,6 @@
 import { Layout } from 'antd';
 import './App.css';
-import MenuTop from './components/navigation-bar';
+import NavigationBar from './components/navigation-bar';
 import MenuLeft from './components/menu-left';
 import { Route, Routes } from 'react-router-dom';
 import UploadPage from './pages/upload-page';
@@ -16,7 +16,7 @@ function App() {
   return (
     <Layout>
       <Header className="header">
-        <MenuTop></MenuTop>
+        <NavigationBar></NavigationBar>
       </Header>
       <Content style={{ padding: '0 50px 50px 50px'}}>
         <BreadcrumbTop></BreadcrumbTop>
