@@ -1,4 +1,4 @@
-import { Button, Input, message, Tag, Tooltip } from "antd"
+import { Button, Input, message } from "antd"
 import { imageProps, useAppContext } from "../../store"
 import { MediumOutlined,CopyOutlined } from '@ant-design/icons';
 import { useState } from "react";

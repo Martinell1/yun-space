@@ -1,4 +1,4 @@
-import { Button, Dropdown, Form, Menu, Switch } from "antd";
+import { Button, Dropdown , Menu, Switch } from "antd";
 import { useAppContext } from "../../store";
 import { FormOutlined,CloudUploadOutlined } from '@ant-design/icons';
 import { useState } from "react";
@@ -22,14 +22,8 @@ export default function SettingPage(){
     const [currentTheme,setCurrentTheme] = useState(config.theme)
 
     return (
-        <div style={{padding:'20px'}}>
+        <div style={{padding:'20px 0'}}>
             <div>
-                <Switch checkedChildren="开启压缩" unCheckedChildren="关闭" defaultChecked={config.compress} onChange={(e)=>{
-                    config.compress = e;
-                    setConfig(config)
-                }}/>
-            </div>
-            <div style={{marginTop:'20px'}}>
                 <Dropdown 
                     overlay={
                         <Menu 

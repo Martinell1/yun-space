@@ -3,7 +3,6 @@ import { InboxOutlined } from '@ant-design/icons';
 import { useAppContext } from '../../store';
 import axios from 'axios';
 import { useState } from 'react';
-
 const { Dragger } = Upload;
 
 const uploadConfig = {
@@ -21,7 +20,8 @@ export default function UploadPage(){
             <Dragger 
                 {...uploadConfig}
                 customRequest={
-                  async (info)=>{
+                  async (info)=>{    
+
                     const {data} = await axios.post('http://localhost:3001/getUploadToken',config)
                     const form = new FormData()
                     form.append('file',info.file)
