@@ -1,13 +1,18 @@
 import { useAppContext } from '../../store'
-import React, { useState } from 'react';
-import { Button, Card, Image } from 'antd';
+import React, { useEffect, useState } from 'react';
+import { Button, Card, Image, message } from 'antd';
 import SelectDir from '../../components/select-dir';
 import './index.css'
 import ImageExpand from '../../components/image-expand';
 
 export default function ManagePage(){
-    const {config,management} = useAppContext()
+    const {config,management,setManagement} = useAppContext()
     const [currentDir,setCurrentDir] = useState(config.dir)
+
+    useEffect(()=>{
+        console.log('change');
+        
+    },[management])
 
     return (
         <div style={{padding:'20px 0'}}>
@@ -43,7 +48,24 @@ export default function ManagePage(){
                                             id={image.id} 
                                             dir={image.dir} 
                                             name={image.name} 
-                                            url={image.url}                                      
+                                            url={image.url}
+                                            deleteFn={()=>{
+                                                management.map(dir => {
+                                                    let index = -1
+                                                    if(dir.dir === image.dir){
+                                                        for(let i = 0 ; i < dir.imageList.length; i++){
+                                                            if(dir.imageList[i].id === image.id){
+                                                                index = i
+                                                                break
+                                                            }
+                                                        }
+                                                        dir.imageList.splice(index,1)
+                                                    }
+                                                    return dir
+                                                })
+                                                setManagement(management)
+                                                message.success('删除成功')
+                                            }}                                     
                                         />
                                     </Card>
                                 )
