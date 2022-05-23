@@ -40,7 +40,7 @@ export default function ManagePage(){
                                             />
                                         }>
                                         <ImageExpand 
-                                            key={image.key} 
+                                            id={image.id} 
                                             dir={image.dir} 
                                             name={image.name} 
                                             url={image.url}                                      

@@ -34,7 +34,7 @@ export default function UploadPage(){
                         if(element.dir === config.dir){
                           element.imageList.push({
                             dir:config.dir,
-                            key:key,
+                            id:key,
                             name:key,
                             url
                           })

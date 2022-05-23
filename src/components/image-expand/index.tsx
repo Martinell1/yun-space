@@ -1,22 +1,31 @@
 import { Button, Input, message, Tag, Tooltip } from "antd"
-import { imageProps } from "../../store"
+import { imageProps, useAppContext } from "../../store"
 import { MediumOutlined,CopyOutlined } from '@ant-design/icons';
 import { useState } from "react";
 const ImageExpand = (props:imageProps)=>{
     const [isMarkDown,SetIsMarkDown] = useState(false)
+    const {management,setManagement} = useAppContext()
     const clipboardObj = navigator.clipboard;
     return (
         <div style={{padding:'5px 0 11px 0'}}>
             <Input 
                 bordered={false} 
                 defaultValue={props.name} 
-                onBlur={()=>{
-                    console.log('失去焦点修改');
-                    
+                onBlur={(e)=>{
+                    management.forEach(item=>{
+                        if(item.dir === props.dir){
+                            item.imageList.forEach(pic=>{
+                                if(pic.id === props.id){
+                                    pic.name = e.target.value
+                                }
+                            })
+                        }
+                    })
+                    setManagement(management);
                 }}>
             </Input>
             <div
-                style={{padding:'0 11px',display:'flex',justifyContent:'space-between'}}>
+                style={{padding:'4px 11px 0 11px',display:'flex',justifyContent:'space-between'}}>
                 <Button 
                     type={isMarkDown ? 'primary' : 'default'}
                     size="small" 
@@ -34,7 +43,7 @@ const ImageExpand = (props:imageProps)=>{
                             clipboardObj.writeText(props.url);
                         }
                        
-                        message.success("已拷贝链接")
+                        message.success(`已拷贝${isMarkDown ? 'Markdown' : ''}链接`)
                     }}
                 />
             </div>

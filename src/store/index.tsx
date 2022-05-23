@@ -12,7 +12,7 @@ export interface configProps {
 export interface imageProps {
     dir:string,
     name:string,
-    key:string,
+    id:string,
     url:string,
 }
 
