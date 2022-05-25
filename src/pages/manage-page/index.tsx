@@ -1,5 +1,5 @@
 import { useAppContext } from '../../store'
-import React, { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Button, Card, Image, message } from 'antd';
 import SelectDir from '../../components/select-dir';
 import './index.css'
@@ -8,11 +8,6 @@ import ImageExpand from '../../components/image-expand';
 export default function ManagePage(){
     const {config,management,setManagement} = useAppContext()
     const [currentDir,setCurrentDir] = useState(config.dir)
-
-    useEffect(()=>{
-        console.log('change');
-        
-    },[management])
 
     return (
         <div style={{padding:'20px 0'}}>
@@ -63,7 +58,7 @@ export default function ManagePage(){
                                                     }
                                                     return dir
                                                 })
-                                                setManagement(management)
+                                                setManagement([...management])
                                                 message.success('删除成功')
                                             }}                                     
                                         />
