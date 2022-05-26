@@ -61,21 +61,6 @@ const ImageExpand = (props:imageExpandProps)=>{
                     }
                     onConfirm ={()=>{
                         props.deleteFn()
-                        // management.map(dir => {
-                        //     let index = -1
-                        //     if(dir.dir === props.dir){
-                        //         for(let i = 0 ; i < dir.imageList.length; i++){
-                        //             if(dir.imageList[i].id === props.id){
-                        //                 index = i
-                        //                 break
-                        //             }
-                        //         }
-                        //         dir.imageList.splice(index,1)
-                        //     }
-                        //     return dir
-                        // })
-                        // setManagement(management)
-                        // message.success('删除成功')
                     }}
                 >
                     <Button 

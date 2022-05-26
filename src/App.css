@@ -1,9 +1,2 @@
-@import '~antd/dist/antd.css';
-
-.site-layout-background {
-  background: #fff;
-}
-
-.sider{
-  border-right: 1px solid #eee;
-}
+/* @import '~antd/dist/antd.css'; */
+@import 'antd/dist/antd.variable.min.css';

@@ -31,7 +31,7 @@ export default function SettingPage(){
                             onClick={(e)=>{
                                 config.theme = e.key
                                 setCurrentTheme(e.key)
-                                setConfig(config)
+                                setConfig({...config})
                             }}
                         />
                     } 
