@@ -1,5 +1,5 @@
-import { Button, Dropdown , Menu } from "antd";
-import { useAppContext } from "../../store";
+import { Button, Dropdown , Menu, message, Upload } from "antd";
+import { imageProps, managementProps, useAppContext } from "../../store";
 import { FormOutlined,CloudUploadOutlined } from '@ant-design/icons';
 import { useState } from "react";
 
@@ -18,7 +18,7 @@ const items = [
 
 export default function SettingPage(){
     
-    const {config,management,setConfig} = useAppContext()
+    const {config,setConfig,management,setManagement} = useAppContext()
     const [currentTheme,setCurrentTheme] = useState(config.theme)
 
     return (
@@ -49,7 +49,7 @@ export default function SettingPage(){
                     const tempLink = document.createElement('a')
                     tempLink.style.display = 'none'
                     tempLink.href = url
-                    tempLink.setAttribute('download', decodeURI('filename'))
+                    tempLink.setAttribute('download', decodeURI(new Date().toLocaleDateString()))
                     // 兼容：某些浏览器不支持HTML5的download属性
                     if (typeof tempLink.download === 'undefined') {
                         tempLink.setAttribute('target', '_blank')
@@ -60,9 +60,23 @@ export default function SettingPage(){
                     document.body.removeChild(tempLink);
                     // 释放blob URL地址
                     window.URL.revokeObjectURL(url);
-                    console.log(url);
-                }}>导出
+                }}>导出配置
             </Button>
+            <Upload
+                accept=".json"
+                showUploadList={false}
+                customRequest={(e)=>{
+                    let reader = new FileReader();
+                    reader.onload = ()=>{
+                        const newManagement = JSON.parse(reader.result as string);
+                        setManagement(newManagement)
+                        message.success('导入成昆')
+                    }
+                    reader.readAsText(e.file as Blob)
+                }}
+            >
+                <Button style={{marginLeft:'20px'}}>导入配置</Button>
+            </Upload>
         </div>
     )
 }
