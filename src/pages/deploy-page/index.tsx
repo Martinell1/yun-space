@@ -2,10 +2,10 @@ import { Form, Input, Button, Radio , message } from 'antd';
 import { useState } from 'react';
 import SelectDir from '../../components/select-dir';
 
-import { configProps ,imageProps,useAppContext } from '../../store';
+import { configProps ,imageProps,managementProps,useAppContext } from '../../store';
 
 interface deployProps extends configProps{
-  catalogType:number
+  catalogType?:number
 }
 
 export default function DeployPage(){
@@ -16,16 +16,24 @@ export default function DeployPage(){
         }else if(newConfig.catalogType === 2){
             newConfig.dir = currentDir
         }else if(newConfig.catalogType === 3){
+            const dirs = management.map((managementItem:managementProps)=>{
+                return managementItem['dir']
+            })
+            if(dirs.includes(newConfig.dir)){
+                message.error('该目录已存在')
+                return
+            }
+
             management.push({
                 'dir':newConfig.dir,
                 'imageList':[] as Array<imageProps>
             })
             setManagement(management)
         }
-        
+        newConfig.theme = config.theme
+        delete newConfig.catalogType
         setConfig(newConfig)
         message.success(`配置成功`)
-
     }
 
     const [catalogType,setCatalogType] = useState(2)
@@ -35,7 +43,9 @@ export default function DeployPage(){
             style={{padding:'20px'}}
             colon={false}
             labelCol={{ span: 1 }}
-            initialValues={config}
+            initialValues={
+                {catalogType,...config}
+            }
             onFinish={onFinish}
             >
             <Form.Item label="accessKey" name='accessKey'>
@@ -52,7 +62,6 @@ export default function DeployPage(){
             </Form.Item>
             <Form.Item label="选择目录" name='catalogType'>
                 <Radio.Group 
-                    value={catalogType}
                     onChange={({target})=>{
                         setCatalogType(target.value)              
                     }}
@@ -71,7 +80,7 @@ export default function DeployPage(){
                         ?   <Form.Item label="新建目录" name='dir'>
                                 <Input placeholder="请输入新目录名"/>
                             </Form.Item> 
-                        :   ''
+                        :   null
             }
             <Form.Item  wrapperCol={{ offset:1 }}>
                 <Button type="primary" htmlType="submit">
