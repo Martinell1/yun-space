@@ -1,17 +1,44 @@
 import { useAppContext } from '../../store'
 import { useState } from 'react';
-import { Button, Card, Image, message } from 'antd';
+import { Button, Card, Image, message, Popconfirm } from 'antd';
+import { QuestionCircleOutlined } from '@ant-design/icons';
 import SelectDir from '../../components/select-dir';
 import './index.css'
 import ImageExpand from '../../components/image-expand';
 
 export default function ManagePage(){
-    const {config,management,setManagement} = useAppContext()
+    const {config,setConfig,management,setManagement} = useAppContext()
     const [currentDir,setCurrentDir] = useState(config.dir)
+
 
     return (
         <div style={{padding:'20px 0'}}>
-        <SelectDir currentDir={currentDir} setCurrentDir={setCurrentDir} children={<Button style={{marginBottom:'20px'}}>{currentDir}</Button>}></SelectDir>
+        <div style={{display:'flex',justifyContent:'space-between'}}>
+            <SelectDir currentDir={currentDir} setCurrentDir={setCurrentDir} children={<Button style={{marginBottom:'20px'}}>{currentDir}</Button>}></SelectDir>
+            <Popconfirm 
+                    title="确认删除?" 
+                    icon={<QuestionCircleOutlined 
+                        style={{ color: 'red' }}/>
+                    }
+                    onConfirm ={()=>{
+                        if(currentDir === 'default'){
+                            message.error('无法删除默认目录')
+                            return
+                        }
+                        const newManagement = management.filter(item=>{
+                            return item.dir !== currentDir
+                        })
+                        config.dir = 'default'
+                        setConfig({...config})
+                        setCurrentDir('dedfault')
+                        setManagement(newManagement)
+                        message.success('删除成昆')
+                    }}
+                    placement="bottomRight"
+                >
+                    <Button danger>删除</Button>
+            </Popconfirm>
+        </div>
         {
             management.map((dir,index) => {
                 return (
