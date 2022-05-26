@@ -29,6 +29,9 @@ router.post('/getUploadToken',(ctx)=>{
       ctx.body = uploadToken
     }
 })
+
+
+
 app.use(body())
 
 app.use(router.routes())
