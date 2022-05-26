@@ -69,6 +69,13 @@ export default function SettingPage(){
                     let reader = new FileReader();
                     reader.onload = ()=>{
                         const newManagement = JSON.parse(reader.result as string);
+                        const dirs = newManagement.map((management:managementProps)=>{
+                            return management['dir']
+                        })
+                        if(!dirs.includes(config.dir)){
+                            config.dir = 'default'
+                            setConfig({...config})
+                        }
                         setManagement(newManagement)
                         message.success('导入成昆')
                     }
