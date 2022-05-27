@@ -1,5 +1,3 @@
-import { Avatar } from 'antd';
-import { UserOutlined } from '@ant-design/icons';
 import './index.css'
 import icon from '../../assets/images/icon.svg'
 

@@ -1,5 +1,5 @@
 import { Button, Dropdown , Menu, message, Upload } from "antd";
-import { managementProps, useAppContext } from "../../store";
+import { useAppContext } from "../../store";
 import { FormOutlined,CloudUploadOutlined } from '@ant-design/icons';
 import { useState } from "react";
 
