@@ -1,6 +1,6 @@
 import { useAppContext } from '../../store'
-import { useState } from 'react';
-import { Button, Card, Image, message, Popconfirm } from 'antd';
+import { useEffect, useState } from 'react';
+import { Button, Card, Image, Input, message, Modal, Popconfirm } from 'antd';
 import { QuestionCircleOutlined } from '@ant-design/icons';
 import SelectDir from '../../components/select-dir';
 import './index.css'
@@ -9,35 +9,85 @@ import ImageExpand from '../../components/image-expand';
 export default function ManagePage(){
     const {config,setConfig,management,setManagement} = useAppContext()
     const [currentDir,setCurrentDir] = useState(config.dir)
+    const [newDirName,setNewDirName] = useState(config.dir)
+    const [isModalVisible,setIsModalVisible] = useState(false)
 
+    useEffect(()=>{
+        setCurrentDir(config.dir)
+    },[config.dir])
+
+    useEffect(()=>{
+        setNewDirName(currentDir)
+    },[currentDir])
 
     return (
         <div style={{padding:'20px 0'}}>
         <div style={{display:'flex',justifyContent:'space-between'}}>
             <SelectDir currentDir={currentDir} setCurrentDir={setCurrentDir} children={<Button style={{marginBottom:'20px'}}>{currentDir}</Button>}></SelectDir>
-            <Popconfirm 
-                    title="确认删除?" 
-                    icon={<QuestionCircleOutlined 
-                        style={{ color: 'red' }}/>
-                    }
-                    onConfirm ={()=>{
+            <div>
+                <Button 
+                    style={{marginRight:'20px'}}
+                    type="primary" 
+                    onClick={()=>{
                         if(currentDir === 'default'){
-                            message.error('无法删除默认目录')
+                            message.error('默认目录不可修改')
                             return
                         }
-                        const newManagement = management.filter(item=>{
-                            return item.dir !== currentDir
+                    setIsModalVisible(!isModalVisible)
+                    }}>重命名
+                </Button>
+                <Modal title="重命名当前目录" 
+                    cancelText='取消'
+                    okText='确认'
+                    visible={isModalVisible} 
+                    onOk={()=>{
+                        const newManagement = management.map((item)=>{
+                            if(item.dir === currentDir){
+                                item.dir = newDirName
+                            }
+                            return item
                         })
-                        config.dir = 'default'
+                        config.dir = newDirName
                         setConfig({...config})
-                        setCurrentDir('dedfault')
                         setManagement(newManagement)
-                        message.success('删除成昆')
-                    }}
-                    placement="bottomRight"
-                >
-                    <Button danger>删除</Button>
-            </Popconfirm>
+                        setIsModalVisible(false)
+                    }} 
+                    onCancel={()=>{
+                        setIsModalVisible(false)
+                    }}>
+                    <Input 
+                        defaultValue={currentDir}
+                        placeholder="请输入新目录名"
+                        onChange={(e)=>{
+                            setNewDirName(e.target.value)
+                        }}
+                    />
+                </Modal>
+                <Popconfirm 
+                        title="确认删除?" 
+                        icon={<QuestionCircleOutlined 
+                            style={{ color: 'red' }}/>
+                        }
+                        onConfirm ={()=>{
+                            if(currentDir === 'default'){
+                                message.error('无法删除默认目录')
+                                return
+                            }
+                            const newManagement = management.filter(item=>{
+                                return item.dir !== currentDir
+                            })
+                            config.dir = 'default'
+                            setConfig({...config})
+                            setCurrentDir('dedfault')
+                            setManagement(newManagement)
+                            message.success('删除成昆')
+                        }}
+                        placement="bottomRight"
+                    >
+                        <Button danger>删除</Button>
+                </Popconfirm>
+            </div>
+
         </div>
         {
             management.map((dir,index) => {

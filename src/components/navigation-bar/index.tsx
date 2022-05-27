@@ -11,7 +11,7 @@ export default function NavigationBar() {
         <img className='logo' src={icon} alt="" width={48} height={48} />
         <div className='title'>Yun-Space</div>
       </div>
-      <Avatar size="large" icon={<UserOutlined />} />
+      {/* <Avatar size="large" icon={<UserOutlined />} /> */}
     </div>
   )
 };

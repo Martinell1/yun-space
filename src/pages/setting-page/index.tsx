@@ -45,9 +45,7 @@ export default function SettingPage(){
                     const newConfig = {
                         config,
                         management
-                    }
-                    console.log(newConfig);
-                    
+                    }     
                     let blob = new Blob([JSON.stringify(newConfig, null, 2)], {type : 'application/json'});
                     console.log(blob);
                     var url = URL.createObjectURL(blob);
