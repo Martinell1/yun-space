@@ -42,14 +42,20 @@ export default function SettingPage(){
             </div>
             <Button 
                 onClick={()=>{
-                    let blob = new Blob([JSON.stringify(management, null, 2)], {type : 'application/json'});
+                    const newConfig = {
+                        config,
+                        management
+                    }
+                    console.log(newConfig);
+                    
+                    let blob = new Blob([JSON.stringify(newConfig, null, 2)], {type : 'application/json'});
                     console.log(blob);
                     var url = URL.createObjectURL(blob);
                     // 创建a标签，用于跳转至下载链接
                     const tempLink = document.createElement('a')
                     tempLink.style.display = 'none'
                     tempLink.href = url
-                    tempLink.setAttribute('download', decodeURI(new Date().toLocaleDateString()))
+                    tempLink.setAttribute('download', decodeURI(config.bucket+"_"+new Date().toLocaleDateString()))
                     // 兼容：某些浏览器不支持HTML5的download属性
                     if (typeof tempLink.download === 'undefined') {
                         tempLink.setAttribute('target', '_blank')
@@ -68,14 +74,10 @@ export default function SettingPage(){
                 customRequest={(e)=>{
                     let reader = new FileReader();
                     reader.onload = ()=>{
-                        const newManagement = JSON.parse(reader.result as string);
-                        const dirs = newManagement.map((management:managementProps)=>{
-                            return management['dir']
-                        })
-                        if(!dirs.includes(config.dir)){
-                            config.dir = 'default'
-                            setConfig({...config})
-                        }
+                        const {config : newConfig,management : newManagement} = JSON.parse(reader.result as string);
+                        console.log(config,management);
+                        
+                        setConfig(newConfig)
                         setManagement(newManagement)
                         message.success('导入成昆')
                     }
