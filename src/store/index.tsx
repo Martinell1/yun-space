@@ -5,6 +5,7 @@ export interface configProps {
     accessKey:string,
     secretKey:string,
     bucket:string,
+    area:string,
     domain:string,
     dir:string,
     theme:string,
@@ -27,6 +28,7 @@ export const appContext = React.createContext({
         accessKey:'',
         secretKey:'',
         bucket:'',
+        area:'',
         domain:'',
         dir:'',
         theme:''
@@ -45,6 +47,7 @@ export const AppProviders = ({children}:{children:ReactNode}) => {
             accessKey:'',
             secretKey:'',
             bucket:'',
+            area:'',
             domain:'',
             dir:'/default',
             theme:'light'

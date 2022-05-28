@@ -1,4 +1,4 @@
-import { Form, Input, Button, Radio , message } from 'antd';
+import { Form, Input, Button, Radio , message, Dropdown, Menu } from 'antd';
 import axios from 'axios';
 import { useState } from 'react';
 import SelectDir from '../../components/select-dir';
@@ -8,6 +8,33 @@ import { configProps ,imageProps,managementProps,useAppContext } from '../../sto
 interface deployProps extends configProps{
   catalogType?:number
 }
+
+const areas = [
+    {
+        label: '华东',
+        key: 'z0',
+    },
+    {
+        label: '华北',
+        key: 'z1',
+    },
+    {
+        label: '华南',
+        key: 'z2',
+    },
+    {
+        label: '北美',
+        key: 'na0',
+    },
+    {
+        label: '东南亚',
+        key: 'as0',
+    },
+    {
+       label:'华东-浙江2',
+        key:'cn-east-2'
+    }
+  ];
 
 export default function DeployPage(){
     const {config,setConfig,management,setManagement} = useAppContext()
@@ -33,12 +60,15 @@ export default function DeployPage(){
         }
         newConfig.theme = config.theme
         delete newConfig.catalogType
+        newConfig.area = currentArea
         setConfig(newConfig)
         message.success(`配置成功`)
     }
 
     const [catalogType,setCatalogType] = useState(2)
     const [currentDir,setCurrentDir] = useState(config.dir)
+    const [currentArea,setCurrentArea] = useState(config.area)
+
     return (
         <Form
             style={{padding:'20px'}}
@@ -57,6 +87,23 @@ export default function DeployPage(){
             </Form.Item>
             <Form.Item label="bucket" name='bucket'>
                 <Input placeholder="请输入bucket"/>
+            </Form.Item>
+            <Form.Item label="area" name='area'>
+                <Dropdown 
+                    overlay={
+                        <Menu 
+                            items={areas} 
+                            onClick={(e)=>{
+                                setCurrentArea(e.key)
+                            }}
+                        />
+                    } 
+                    placement="bottomRight" 
+                    arrow>
+                    {
+                        <Input value={currentArea}/>
+                    }
+                </Dropdown>
             </Form.Item>
             <Form.Item label="domain" name='domain'>
                 <Input placeholder="请输入域名"/>

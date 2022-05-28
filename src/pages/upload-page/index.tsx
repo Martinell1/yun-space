@@ -25,7 +25,7 @@ export default function UploadPage(){
                     const form = new FormData()
                     form.append('file',info.file)
                     form.append('token',data)
-                    axios.post('http://upload-cn-east-2.qiniup.com',form)
+                    axios.post(`http://upload${config.area === 'z0' ? config.area : `-${config.area}`}.qiniup.com`,form)
                     .then(res=>{
                       const {key} = res.data
                       const url = `http://${config.domain}/${key}`;
