@@ -50,7 +50,7 @@ function App() {
                 <Route path='/upload' element={<UploadPage/>}></Route>
                 <Route path='/manage' element={<ManagePage/>}></Route>
                 <Route path='/setting' element={<SettingPage/>}></Route>
-                <Route path='/feedback' element={<FeedbackPage/>}></Route>
+                {/* <Route path='/feedback' element={<FeedbackPage/>}></Route> */}
               </Routes>
             </Content>
           </Layout>

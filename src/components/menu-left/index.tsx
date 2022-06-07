@@ -24,11 +24,11 @@ const items = [
     key: 'setting',
     icon: <SettingOutlined />,
   },
-  {
-    label: '帮助反馈',
-    key: 'feedback',
-    icon: <MailOutlined />,
-  },
+  // {
+  //   label: '帮助反馈',
+  //   key: 'feedback',
+  //   icon: <MailOutlined />,
+  // },
 ];
 
 const MenuLeft:FC = () => {
