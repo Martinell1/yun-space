@@ -1,5 +1,4 @@
 import { Form, Input, Button, Radio , message, Dropdown, Menu } from 'antd';
-import axios from 'axios';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import SelectDir from '../../components/select-dir';

@@ -46,17 +46,11 @@ export default function ManagePage(){
                     okText='确认'
                     visible={isModalVisible} 
                     onOk={()=>{
-                        const newManagement = management.map((item)=>{
-                            if(item.dir === currentDir){
-                                item.dir = newDirName
-                            }
-                            return item
-                        })
-                        config.dir = newDirName
-                        
-                        dispatch(configActions.setConfig({...config}))
-                        dispatch(managementActions.setManagement(newManagement))
-
+                        dispatch(managementActions.renameManagement({
+                            oldName:config.dir,
+                            newName:newDirName
+                        }))
+                        dispatch(configActions.setConfig({...config,dir:newDirName}))
                         setIsModalVisible(false)
                     }} 
                     onCancel={()=>{
