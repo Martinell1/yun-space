@@ -1,5 +1,7 @@
-import React, { ReactNode } from "react";
-import {useLocalStorageState} from 'ahooks'
+import { configureStore } from "@reduxjs/toolkit";
+import { configSlice } from "./config.slice";
+import { managementSlice } from "./management.slice";
+
 
 export interface configProps {
     accessKey:string,
@@ -18,57 +20,14 @@ export interface imageProps {
     url:string,
 }
 
-export interface managementProps {
-    dir:string,
-    imageList:Array<imageProps>
+export const rootReducer = {
+    config:configSlice.reducer,
+    management:managementSlice.reducer,
 }
 
-export const appContext = React.createContext({
-    config:{
-        accessKey:'',
-        secretKey:'',
-        bucket:'',
-        area:'',
-        domain:'',
-        dir:'',
-        theme:''
-    },
-    setConfig:(newConfig:configProps)=>{},
-    management:[{
-        dir:'default',
-        imageList:[] as Array<imageProps>
-    }],
-    setManagement:(newManagement:managementProps[])=>{},
+export const store = configureStore({
+    reducer:rootReducer
 })
 
-export const AppProviders = ({children}:{children:ReactNode}) => {
-    const [config,setConfig] = useLocalStorageState('YunSpace_Config',{
-        defaultValue:{
-            accessKey:'',
-            secretKey:'',
-            bucket:'',
-            area:'',
-            domain:'',
-            dir:'/default',
-            theme:'light'
-        }
-    })
-
-    const [management ,setManagement] = useLocalStorageState('YunSpace_Management',{
-        defaultValue:[{
-            dir:'default',
-            imageList:[] as Array<imageProps>
-        }]
-    })
-
-    return (
-        <appContext.Provider value={{config,setConfig,management,setManagement}}>
-            {children}
-        </appContext.Provider>
-    )
-}
-
-export const useAppContext = () => {
-    const context = React.useContext(appContext)
-    return context;
-}
+export type AppDispatch = typeof store.dispatch
+export type RootState = ReturnType<typeof store.getState>

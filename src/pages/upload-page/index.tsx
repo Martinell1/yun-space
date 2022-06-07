@@ -1,8 +1,10 @@
 import { Upload, Image, message } from 'antd';
 import { InboxOutlined } from '@ant-design/icons';
-import { useAppContext } from '../../store';
 import axios from 'axios';
 import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { selectConfig } from '../../store/config.slice';
+import { managementActions, selectManagement } from '../../store/management.slice';
 const { Dragger } = Upload;
 
 const uploadConfig = {
@@ -12,7 +14,9 @@ const uploadConfig = {
 };
 
 export default function UploadPage(){
-    const {config,management,setManagement} = useAppContext()
+    const config = useSelector(selectConfig)
+    const management = useSelector(selectManagement)
+    const dispatch = useDispatch()
     const [currentUrl,setCurrentUrl] = useState('')
 
     return (
@@ -45,19 +49,33 @@ export default function UploadPage(){
                       }
 
                       if(!hasUpload){
-                        management.map(element=>{
-                          if(element.dir === config.dir){
-                            element.imageList.push({
-                              dir:config.dir,
-                              id:key,
-                              name:key,
-                              url
-                            })
-                          }
-                          return element
-                        })
+                        // management.map(element=>{
+                        //   if(element.dir === config.dir){
+                            
+                        //     // element.imageList.push({
+                        //     //   dir:config.dir,
+                        //     //   id:key,
+                        //     //   name:key,
+                        //     //   url
+                        //     // })
+                        //     console.log(Object.isFrozen(element.imageList));
+                            
+                        //     element.imageList = [...element.imageList,{
+                        //       dir:config.dir,
+                        //       id:key,
+                        //       name:key,
+                        //       url
+                        //     }]
+                        //   }
+                        //   return element
+                        // })
                         setCurrentUrl(url)
-                        setManagement(management)
+                        dispatch(managementActions.pushImage({
+                          dir:config.dir,
+                          id:key,
+                          name:key,
+                          url
+                        }))
                         message.success(`上传成功`)
                       }
                     })

@@ -1,10 +1,11 @@
 import {Breadcrumb} from 'antd'
+import { useSelector } from 'react-redux'
 import { useLocation } from 'react-router-dom'
-import { useAppContext } from '../../store'
+import { selectConfig } from '../../store/config.slice'
 
 export default function BreadcrumbTop(){
     const location = useLocation()
-    const {config} = useAppContext()
+    const config = useSelector(selectConfig)
     return (
         <Breadcrumb style={{ margin: '16px' }}>
             <Breadcrumb.Item>Yun-Space</Breadcrumb.Item>

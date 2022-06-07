@@ -1,6 +1,7 @@
 import { Dropdown, Menu ,Input } from "antd"
 import { ReactNode } from "react"
-import { useAppContext } from "../../store"
+import { useSelector } from "react-redux"
+import { selectManagement } from "../../store/management.slice"
 
 interface SelectProps {
     currentDir:string,
@@ -9,7 +10,7 @@ interface SelectProps {
 }
 
 export default function SelectDir({currentDir,setCurrentDir,children}:SelectProps){
-    const {management} = useAppContext()
+    const management = useSelector(selectManagement)
 
     return (
         <Dropdown 

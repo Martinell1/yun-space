@@ -1,13 +1,17 @@
-import { useAppContext } from '../../store'
 import { useEffect, useState } from 'react';
 import { Button, Card, Image, Input, message, Modal, Popconfirm } from 'antd';
 import { QuestionCircleOutlined } from '@ant-design/icons';
 import SelectDir from '../../components/select-dir';
 import './index.css'
 import ImageExpand from '../../components/image-expand';
+import { useDispatch, useSelector } from 'react-redux';
+import { managementActions, selectManagement } from '../../store/management.slice';
+import { configActions, selectConfig } from '../../store/config.slice';
 
 export default function ManagePage(){
-    const {config,setConfig,management,setManagement} = useAppContext()
+    const config = useSelector(selectConfig)
+    const management = useSelector(selectManagement)
+    const dispatch = useDispatch()
     const [currentDir,setCurrentDir] = useState(config.dir)
     const [newDirName,setNewDirName] = useState(config.dir)
     const [isModalVisible,setIsModalVisible] = useState(false)
@@ -20,6 +24,7 @@ export default function ManagePage(){
         setNewDirName(currentDir)
     },[currentDir])
 
+    
     return (
         <div style={{padding:'20px 0'}}>
         <div style={{display:'flex',justifyContent:'space-between'}}>
@@ -48,8 +53,10 @@ export default function ManagePage(){
                             return item
                         })
                         config.dir = newDirName
-                        setConfig({...config})
-                        setManagement(newManagement)
+                        
+                        dispatch(configActions.setConfig({...config}))
+                        dispatch(managementActions.setManagement(newManagement))
+
                         setIsModalVisible(false)
                     }} 
                     onCancel={()=>{
@@ -77,9 +84,9 @@ export default function ManagePage(){
                                 return item.dir !== currentDir
                             })
                             config.dir = 'default'
-                            setConfig({...config})
+                            dispatch(configActions.setConfig({...config}))     
                             setCurrentDir('dedfault')
-                            setManagement(newManagement)
+                            dispatch(managementActions.setManagement(newManagement))
                             message.success('删除成昆')
                         }}
                         placement="bottomRight"
@@ -135,7 +142,7 @@ export default function ManagePage(){
                                                     }
                                                     return dir
                                                 })
-                                                setManagement([...management])
+                                                dispatch(managementActions.setManagement([...management]))
                                                 message.success('删除成功')
                                             }}                                     
                                         />

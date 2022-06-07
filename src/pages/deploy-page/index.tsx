@@ -1,9 +1,12 @@
 import { Form, Input, Button, Radio , message, Dropdown, Menu } from 'antd';
 import axios from 'axios';
 import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import SelectDir from '../../components/select-dir';
 
-import { configProps ,imageProps,managementProps,useAppContext } from '../../store';
+import { configProps ,imageProps } from '../../store';
+import { configActions, selectConfig } from '../../store/config.slice';
+import { managementActions, selectManagement } from '../../store/management.slice';
 
 interface deployProps extends configProps{
   catalogType?:number
@@ -37,14 +40,17 @@ const areas = [
   ];
 
 export default function DeployPage(){
-    const {config,setConfig,management,setManagement} = useAppContext()
+    const config = useSelector(selectConfig)
+    const management = useSelector(selectManagement)
+    const dispatch = useDispatch()
+
     const onFinish = (newConfig:deployProps) => {
         if(newConfig.catalogType === 1){
             newConfig.dir = 'default'
         }else if(newConfig.catalogType === 2){
             newConfig.dir = currentDir
         }else if(newConfig.catalogType === 3){
-            const dirs = management.map((managementItem:managementProps)=>{
+            const dirs = management.map((managementItem)=>{
                 return managementItem['dir']
             })
             if(dirs.includes(newConfig.dir)){
@@ -56,12 +62,13 @@ export default function DeployPage(){
                 'dir':newConfig.dir,
                 'imageList':[] as Array<imageProps>
             })
-            setManagement(management)
+            dispatch(managementActions.setManagement(management))
+
         }
         newConfig.theme = config.theme
         delete newConfig.catalogType
         newConfig.area = currentArea
-        setConfig(newConfig)
+        dispatch(configActions.setConfig(newConfig))
         message.success(`配置成功`)
     }
 

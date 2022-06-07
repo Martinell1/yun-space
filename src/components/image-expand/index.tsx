@@ -1,7 +1,9 @@
 import { Button, Input, message, Popconfirm } from "antd"
-import { imageProps, useAppContext } from "../../store"
+import { imageProps } from "../../store"
 import { MediumOutlined,CopyOutlined,DeleteOutlined,QuestionCircleOutlined } from '@ant-design/icons';
 import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { managementActions, selectManagement } from "../../store/management.slice";
 
 interface imageExpandProps extends imageProps{
     deleteFn:()=>void
@@ -9,7 +11,8 @@ interface imageExpandProps extends imageProps{
 
 const ImageExpand = (props:imageExpandProps)=>{
     const [isMarkDown,SetIsMarkDown] = useState(false)
-    const {management,setManagement} = useAppContext()
+    const management = useSelector(selectManagement)
+    const dispatch = useDispatch()
     const clipboardObj = navigator.clipboard;
     return (
         <div style={{padding:'5px 0 11px 0'}}>
@@ -26,7 +29,7 @@ const ImageExpand = (props:imageExpandProps)=>{
                             })
                         }
                     })
-                    setManagement(management);
+                    dispatch(managementActions.setManagement(management))
                     message.success('修改成昆')
                 }}>
             </Input>

@@ -9,15 +9,16 @@ import ManagePage from './pages/manage-page';
 import SettingPage from './pages/setting-page';
 import FeedbackPage from './pages/feedback-page';
 import BreadcrumbTop from './components/breadcrumb-top';
-import { useAppContext } from './store';
 import "./theme/custom-default.css";    // 引入custom-default.css 以及 custom-dark.css
 import "./theme/custom-dark.css";
 import { ConfigProvider } from "antd";
 import { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
+import { selectConfig } from './store/config.slice';
 const { Header, Content, Sider } = Layout;
 
 function App() {
-  const {config} = useAppContext()
+  const config = useSelector(selectConfig)
   const [theme, setTheme] = useState(config.theme === 'light' ? 'custom-default' : 'custom-dark');
 
   useEffect(()=>{
@@ -50,7 +51,7 @@ function App() {
                 <Route path='/upload' element={<UploadPage/>}></Route>
                 <Route path='/manage' element={<ManagePage/>}></Route>
                 <Route path='/setting' element={<SettingPage/>}></Route>
-                {/* <Route path='/feedback' element={<FeedbackPage/>}></Route> */}
+                <Route path='/feedback' element={<FeedbackPage/>}></Route>
               </Routes>
             </Content>
           </Layout>

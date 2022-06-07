@@ -1,7 +1,9 @@
 import { Button, Dropdown , Menu, message, Upload } from "antd";
-import { useAppContext } from "../../store";
 import { FormOutlined,CloudUploadOutlined } from '@ant-design/icons';
 import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { configActions, selectConfig } from "../../store/config.slice";
+import { managementActions, selectManagement } from "../../store/management.slice";
 const items = [
     {
       label: '白昼模式',
@@ -17,7 +19,9 @@ const items = [
 
 export default function SettingPage(){
     
-    const {config,setConfig,management,setManagement} = useAppContext()
+    const config = useSelector(selectConfig)
+    const management = useSelector(selectManagement)
+    const dispatch = useDispatch()
     const [currentTheme,setCurrentTheme] = useState(config.theme)
 
     return (
@@ -28,9 +32,8 @@ export default function SettingPage(){
                         <Menu 
                             items={items}
                             onClick={(e)=>{
-                                config.theme = e.key
                                 setCurrentTheme(e.key)
-                                setConfig({...config})
+                                dispatch(configActions.setTheme(e.key))
                             }}
                         />
                     } 
@@ -73,9 +76,8 @@ export default function SettingPage(){
                     reader.onload = ()=>{
                         const {config : newConfig,management : newManagement} = JSON.parse(reader.result as string);
                         console.log(config,management);
-                        
-                        setConfig(newConfig)
-                        setManagement(newManagement)
+                        dispatch(configActions.setConfig(newConfig))
+                        dispatch(managementActions.setManagement(newManagement))
                         message.success('导入成昆')
                     }
                     reader.readAsText(e.file as Blob)
