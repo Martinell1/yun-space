@@ -46,12 +46,20 @@ export default function ManagePage(){
                     okText='确认'
                     visible={isModalVisible} 
                     onOk={()=>{
+                        for(let i = 0 ; i < management.length ; i++){
+                            if(management[i].dir === newDirName){
+                                console.log('执行');
+                                message.error('该目录已存在')
+                                return
+                            }
+                        }
                         dispatch(managementActions.renameManagement({
                             oldName:config.dir,
                             newName:newDirName
                         }))
                         dispatch(configActions.setConfig({...config,dir:newDirName}))
                         setIsModalVisible(false)
+                        window.location.reload()
                     }} 
                     onCancel={()=>{
                         setIsModalVisible(false)
