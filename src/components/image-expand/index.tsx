@@ -7,7 +7,7 @@ import { managementActions, selectManagement } from "../../store/management.slic
 
 interface imageExpandProps extends imageProps{
     deleteFn:()=>void
-  }
+}
 
 const ImageExpand = (props:imageExpandProps)=>{
     const [isMarkDown,SetIsMarkDown] = useState(false)
@@ -20,16 +20,11 @@ const ImageExpand = (props:imageExpandProps)=>{
                 bordered={false} 
                 defaultValue={props.name} 
                 onBlur={(e)=>{
-                    management.forEach(item=>{
-                        if(item.dir === props.dir){
-                            item.imageList.forEach(pic=>{
-                                if(pic.id === props.id){
-                                    pic.name = e.target.value
-                                }
-                            })
-                        }
-                    })
-                    dispatch(managementActions.setManagement(management))
+                    dispatch(managementActions.renameImage({
+                        dir:props.dir,
+                        imageId:props.id,
+                        imageName:e.target.value
+                    }))
                     message.success('修改成昆')
                 }}>
             </Input>

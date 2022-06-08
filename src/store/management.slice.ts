@@ -35,6 +35,19 @@ export const managementSlice = createSlice({
         }
       })
       localStorage.setItem('YunSpace_Management',JSON.stringify(state))
+    },
+    renameImage(state:State[],action:{payload:any}){
+      const {dir,imageId,imageName} = action.payload
+      state.forEach(item=>{
+        if(item.dir === dir){
+            item.imageList.forEach(pic=>{
+                if(pic.id === imageId){
+                    pic.name = imageName
+                }
+            })
+        }
+      })
+      localStorage.setItem('YunSpace_Management',JSON.stringify(state))
     }
   }
 })
