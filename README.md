@@ -1,46 +1,56 @@
-# Getting Started with Create React App
+# 图床管理工具
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
 
-In the project directory, you can run:
+## 克隆项目
 
-### `npm start`
+```shell
+git clone git@github.com:Martinell1/kaijin-space.git
+```
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
 
-### `npm test`
+## 项目启动
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+```shell
+//启动前端
+npm start
 
-### `npm run build`
+//启动服务端
+npm run server
+```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## 项目说明
 
-### `npm run eject`
+项目采用`React`+`Antd`+`Redux-toolkit`实现
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+将上传至七牛云图床的文件进行管理
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+项目后端即server文件内的index.js文件，采用Koa框架，只提供生成上传至七牛云所需的token的服务
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+前端将上传后返回的路径保存在本地，以供二次使用
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+同时项目不提供数据库服务，所有配置和图片保存在本地浏览器中，如有需要，可通过导入导出配置实现多端共享。
 
-## Learn More
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## 项目预览
+
+### 配置页
+
+![FkQiS3V5kOiuVk5IaCZzP6yzBtGL](http://qiniu.kaijinx.top/FkQiS3V5kOiuVk5IaCZzP6yzBtGL)
+
+### 上传页
+
+![FgJMy94cD2Ny4DrV4uwihEesSCQ-](http://qiniu.kaijinx.top/FgJMy94cD2Ny4DrV4uwihEesSCQ-)
+
+### 图床页
+
+![FtkLcuGHaARDxjnPx7FszHDGQP0q](http://qiniu.kaijinx.top/FtkLcuGHaARDxjnPx7FszHDGQP0q)
+
+### 设置页（夜间模式）
+
+![FiTG7VBlpT5XE2F3iAz22m1m_A6e](http://qiniu.kaijinx.top/FiTG7VBlpT5XE2F3iAz22m1m_A6e)
+
