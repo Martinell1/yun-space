@@ -85,8 +85,7 @@ export default function ManagePage(){
                             const newManagement = management.filter(item=>{
                                 return item.dir !== currentDir
                             })
-                            config.dir = 'default'
-                            dispatch(configActions.setConfig({...config}))     
+                            dispatch(configActions.setConfig({...config,dir:'default'}))     
                             setCurrentDir('dedfault')
                             dispatch(managementActions.setManagement(newManagement))
                             message.success('删除成昆')

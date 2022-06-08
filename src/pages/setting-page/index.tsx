@@ -79,6 +79,7 @@ export default function SettingPage(){
                         dispatch(configActions.setConfig(newConfig))
                         dispatch(managementActions.setManagement(newManagement))
                         message.success('导入成昆')
+                        window.location.reload()
                     }
                     reader.readAsText(e.file as Blob)
                 }}
