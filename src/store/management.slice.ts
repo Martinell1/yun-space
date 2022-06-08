@@ -48,6 +48,20 @@ export const managementSlice = createSlice({
         }
       })
       localStorage.setItem('YunSpace_Management',JSON.stringify(state))
+    },
+    deleteImage(state:State[],action:{payload:any}){
+      const {dir,imageId} = action.payload
+      state.forEach(item=>{
+        if(item.dir === dir){
+          for(let i = 0; i < item.imageList.length ; i++){
+            if(item.imageList[i].id === imageId){
+              item.imageList.splice(i,1)
+              break
+            }
+          }
+        }
+      })
+      localStorage.setItem('YunSpace_Management',JSON.stringify(state))
     }
   }
 })

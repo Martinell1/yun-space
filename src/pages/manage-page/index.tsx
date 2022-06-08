@@ -131,20 +131,10 @@ export default function ManagePage(){
                                             name={image.name} 
                                             url={image.url}
                                             deleteFn={()=>{
-                                                management.map(dir => {
-                                                    let index = -1
-                                                    if(dir.dir === image.dir){
-                                                        for(let i = 0 ; i < dir.imageList.length; i++){
-                                                            if(dir.imageList[i].id === image.id){
-                                                                index = i
-                                                                break
-                                                            }
-                                                        }
-                                                        dir.imageList.splice(index,1)
-                                                    }
-                                                    return dir
-                                                })
-                                                dispatch(managementActions.setManagement([...management]))
+                                                dispatch(managementActions.deleteImage({
+                                                    dir:image.dir,
+                                                    imageId:image.id,
+                                                }))
                                                 message.success('删除成功')
                                             }}                                     
                                         />
